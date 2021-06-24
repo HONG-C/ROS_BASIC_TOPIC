@@ -1,7 +1,8 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-import rospy
-from std_msgs.msg import String
+import rospy	#ros 내에서 파이썬 사용을 위한 파일 
+from std_msgs.msg import String#기본 메시지 파일 불러오기 
 
 def talker():
       pub = rospy.Publisher('chatter',String,queue_size=10)

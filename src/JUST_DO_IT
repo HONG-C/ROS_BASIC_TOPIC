@@ -1,0 +1,106 @@
+1.ROS 왜 사용?
+[1]복잡한 프로그램 만들기 좋음
+ex.아두이노->자율주행 차 만들려면?
+[2]역할 분담이 쉬움
+ex.자율주행차 만들 때?누구는 센서값 처리만 누구는 모터값 제어만 누구는 path planning만 
+[3]다양한 라이브러리
+추가 기능을 넣고 싶을 때 직접 만들지 않고 가져다 쓸 수 있음 
+
+2.ROS기초+리눅스 기초
+
+
+마스터:사장님
+패키지:사업부(회계부,법무부 같이 각자 같은 역할 하는 직원(노드)들끼리 모아둔 것)
+노드:직원
+토픽: 보내는 파일(이메일)
+메시지 타입:토픽의 자료형(int,string 등등) 
+퍼블리셔: 메시지 보내는 직원(노드)
+서브스크라이버: 메시지 받는 직원(노드)
+*퍼블리셔면서 서브스크라이버일수 있음 
+
+
+cd ~(change directory):경로 변경 
+홈 경로로 돌아가기:cd
+바로 전 경로로 돌아가기:cd -
+ex./home/jihun3900/catkin_ws->/home/jihun3900 이렇게 가고 싶을때 사용!
+ls(list-라식):들어있는 파일 리스트
+pwd(Print Working Directory):절대경로 표시
+컨트롤 c:종료
+컨트롤 z:강제종료(지양하기)
+*실행한 파일이 종료가 안될 때*
+ps:실행되고 있는 프로그램 pid번호 확인
+kill -9 pid번호
+
+
+3.ROS통신 종류
+1.메시지통신:토픽으로 통신(센서값:초음파,라이다(거리탐지),imu(각속도 가속도측정),카메라 영상)
+2.서비스통신:서비스로 통신
+3.액션통신:액션으로 통신 
+
+
+4.ROS메시지 통신
+cd catkin_ws/src/                                       (ros작업공간 및 소스파일 폴더로 이동)
+catkin_create_pkg ros_basic_topic std_msgs rospy        (패키지 생성)
+roscd ros_basic_topic/                                  (생성한 ros 패키지 내 공간으로 이동)
+mkdir msg                                               (msg폴더 생성)
+echo "int64 num" > msg/Num.msg                          (msg폴더에 Num.msg파일 생성 후 int64 num이라는 내용 추가)
+gedit package.xml                                       (패키지 파일 수정)
+파일 열리면 아래 두줄 주석 해제
+<build_depend>message_generation</build_depend>
+<exec_depend>message_runtime</exec_depend>
+cd src                                                  (src폴더로 이동.src폴더는 우리 주로 작업하는 파일넣는 곳)
+gedit talker.py
+아래 내용 추가
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import rospy	#ros 내에서 파이썬 사용을 위한 파일 
+from std_msgs.msg import String#기본 메시지 파일 불러오기 
+
+def talker():
+      pub = rospy.Publisher('chatter',String,queue_size=10)
+      rospy.init_node('talker', anonymous = True)
+      rate = rospy.Rate(10) #10hz
+      while not rospy.is_shutdown():
+            hello_str = "hello world %s" % rospy.get_time()
+            rospy.loginfo(hello_str)
+            pub.publish(hello_str)
+            rate.sleep()
+
+if __name__=='__main__':
+      try:
+            talker()
+      except rospy.ROSInterruptException:
+            pass
+
+                   
+chmod +x talker.py                                    (실행권한 부여)
+gedit listener.py
+아래 내용 추가 
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import rospy	#ros 내에서 파이썬 사용을 위한 파일 
+from std_msgs.msg import String#기본 메시지 파일 불러오기 
+
+def callback(data):
+      rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+
+def listener():
+      rospy.init_node('listener',anonymous=True) #노드명 초기화 
+
+      rospy.Subscriber("chatter", String, callback)
+
+      rospy.spin()
+
+if __name__=='__main__':
+      listener()
+
+chmod +x listener.py                                    (실행권한 부여)
+cm                                                      (변경사항 적용)                   
+roscore                                                 (마스터 실행)
+rosrun ros_basic_topic talker.py                        (퍼블리셔 실행)
+rosrun ros_basic_topic listener.py                      (서브스크라이버 실행)
+rqt_graph                                               (rqt그래프 실행해서 정상작동확인)
+

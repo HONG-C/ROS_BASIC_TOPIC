@@ -13,7 +13,7 @@ ex.자율주행차 만들 때?누구는 센서값 처리만 누구는 모터값 
 패키지:사업부(회계부,법무부 같이 각자 같은 역할 하는 직원(노드)들끼리 모아둔 것)
 노드:직원
 토픽: 보내는 파일(이메일)
-메시지 타입:토픽의 자료형(int,string 등등) 
+메시지 타입:토픽의 자료형(엑셀,파워포인트) 
 퍼블리셔: 메시지 보내는 직원(노드)
 서브스크라이버: 메시지 받는 직원(노드)
 *퍼블리셔면서 서브스크라이버일수 있음 
@@ -103,4 +103,14 @@ roscore                                                 (마스터 실행)
 rosrun ros_basic_topic talker.py                        (퍼블리셔 실행)
 rosrun ros_basic_topic listener.py                      (서브스크라이버 실행)
 rqt_graph                                               (rqt그래프 실행해서 정상작동확인)
+
+
+5.새로운 패키지를 만났을때! 해볼것들
+cm                                                      (변경사항 적용. 새로운 패키지를 만들거나 파일을 만들었을때 반드시 해주기)
+rosrun turtlesim turtlesim_node                         (rosrun은 개별 직원(노드)에게 일 시키는 것(실행하는것))
+rosrun turtlesim turtle_teleop_key                      (rosrun은 개별 직원(노드)에게 일 시키는 것(실행하는것))
+rqt_graph                                               (직원들 일 잘하고 있는지 감시(노드, 토픽 값 확인))
+rostopic list                                           (이메일(토픽) 잘 전송되는지 확인)
+rostopic echo /turtle1/cmd_vel                          (/turtle1/cmd_vel이라는 이름의 이메일(토픽)이 잘 전송되는지랑 내용 확인)
+rostopic type /turtle1/cmd_vel                          (/turtle1/cmd_vel이라는 이름의 이메일(토픽)이 엑셀인지 파워포인트인지(어떤 메시지타입인지) 확인)
 

@@ -4,7 +4,7 @@
 import rospy	#ros 내에서 파이썬 사용을 위한 파일 
 from std_msgs.msg import Int64#기본 메시지 파일 불러오기 
 
-def talker():
+def read_angle():
       pub = rospy.Publisher('angle',Int64,queue_size=10)
       rospy.init_node('steering_angle', anonymous = True)
       rate = rospy.Rate(10) #10hz
@@ -16,7 +16,7 @@ def talker():
 
 if __name__=='__main__':
       try:
-            talker()
+            read_angle()
       except rospy.ROSInterruptException:
             pass
 

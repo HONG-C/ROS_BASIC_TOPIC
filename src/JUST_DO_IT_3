@@ -16,3 +16,23 @@ roslaunch ros_basic_topic ros_basic_topic.launch       (특이하게 꼭 roscore
 2.cd관련 부가 설명
 cd -                                                   (전 경로로 이동)
 cd ..                                                  (바로 상위 경로로 이동)
+
+3.(중요!)타 노드에서 퍼블리싱하는 토픽 받는 법 
+roscore                                                (마스터 실행)
+rosrun turtlesim turtle_teleop_key                     (퍼블리셔 실행)          
+rosrun turtlesim turtlesim_node                        (서브스크라이버 실행)
+
+해볼것:turtle_teleop_key에서 보내는 토픽 다른 서브스크라이버에서 받아보기
+[방법1]
+rostopic list                                          (퍼블리싱 되고있는 토픽들 확인)
+rostopic type /turtle1/cmd_vel                         (메시지 타입 확인)
+roswiki 들어가서 확인한 메시지 타입(geometry_msgs/Twist) 검색창에 검색
+Compact Message Definition에서 뒤에 있는 linear 확인
+
+
+
+
+
+
+
+

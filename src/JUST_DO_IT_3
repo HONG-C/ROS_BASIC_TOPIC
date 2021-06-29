@@ -1,0 +1,18 @@
+1.roslaunch
+roslaunch란? 한번에 여러 직원(노드)들 일 시키기
+cd catkin_ws/src/ros_basic_topic/                      (패키지 경로로 이동)
+mkdir launch                                           (런치파일 넣을 폴더 만들기)
+gedit ros_basic_topic.launch                           (런치 파일 생성)
+아래내용 복붙 후 저장 
+
+<launch>
+  <node name="listener" pkg="ros_basic_topic" type="listener.py" output="screen"/>
+  <node name="talker" pkg="ros_basic_topic" type="talker.py" output="screen" />
+</launch>
+
+cm                                                     (변경사항 저장)
+roslaunch ros_basic_topic ros_basic_topic.launch       (특이하게 꼭 roscore 실행 안해도 됌!)
+
+2.cd관련 부가 설명
+cd -                                                   (전 경로로 이동)
+cd ..                                                  (바로 상위 경로로 이동)

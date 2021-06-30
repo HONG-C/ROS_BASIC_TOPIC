@@ -30,6 +30,10 @@ roswiki 들어가서 확인한 메시지 타입(geometry_msgs/Twist) 검색창�
 Compact Message Definition에서 뒤에 있는 linear 확인
 listener.py파일 복붙해서 listener_test.py파일 만들기
 내용 수정
+[방법2]
+rosnode info /teleop_turtle                            (노드의 정보 표시, 어떤 토픽을 퍼블리싱하고 서브스크라이빙하는지 알려줌, 그 외 정보도 제공)
+그 이후는 1번과 동일 
+
 
 
 

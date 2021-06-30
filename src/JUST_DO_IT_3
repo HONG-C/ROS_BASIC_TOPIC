@@ -28,6 +28,9 @@ rostopic list                                          (퍼블리싱 되고있�
 rostopic type /turtle1/cmd_vel                         (메시지 타입 확인)
 roswiki 들어가서 확인한 메시지 타입(geometry_msgs/Twist) 검색창에 검색
 Compact Message Definition에서 뒤에 있는 linear 확인
+listener.py파일 복붙해서 listener_test.py파일 만들기
+내용 수정
+
 
 
 

@@ -38,6 +38,10 @@ rosnode info /teleop_turtle                            (노드의 정보 표시,
 rostopic pub -1 /angle std_msgs/Int64 20    (-1은 한번 퍼블리싱하라는 뜻)
 rostopic pub -1 (토픽 이름) (퍼블리시되는 메시지 타입) (데이터) 
 
+5.roswiki 활용
+roswiki에서 사용하고 싶은 패키지들 설명 볼수 있음
+
+
 
 
 

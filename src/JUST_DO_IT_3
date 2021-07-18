@@ -41,6 +41,18 @@ rostopic pub -1 (토픽 이름) (퍼블리시되는 메시지 타입) (데이터
 5.roswiki 활용
 roswiki에서 사용하고 싶은 패키지들 설명 볼수 있음
 
+6.ydlidar사용법
+파워케이블,usb c타입케이블 연결
+cd catkin_ws/src
+git clone https://github.com/YDLIDAR/ydlidar
+cm
+roscd ydlidar_ros/startup/
+sudo chmod 777 ./*
+sudo sh initenv.sh
+roslaunch ydlidar_ros lidar_view.launch
+
+
+
 
 
 

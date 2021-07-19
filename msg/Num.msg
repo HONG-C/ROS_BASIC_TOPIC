@@ -1,1 +1,2 @@
-int64 num
+int64 angle
+int64 speed

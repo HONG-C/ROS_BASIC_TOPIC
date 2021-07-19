@@ -51,6 +51,8 @@ sudo chmod 777 ./*
 sudo sh initenv.sh
 roslaunch ydlidar_ros lidar_view.launch
 
+7.메시지 파일 직접 만드는 법!
+https://pinkwink.kr/1191
 
 
 

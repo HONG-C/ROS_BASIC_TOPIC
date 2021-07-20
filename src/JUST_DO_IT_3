@@ -53,11 +53,30 @@ roslaunch ydlidar_ros lidar_view.launch
 
 7.메시지 파일 직접 만드는 법!
 https://pinkwink.kr/1191
+-메시지 파일 수정
+int64 angle   (정수형태의 angle,speed)
+int64 speed
+-package.xml 수정
+ <build_depend>message_generation</build_depend> 
+ <exec_depend>message_runtime</exec_depend> 
+-cmakelist파일 수정
+find_package(catkin REQUIRED COMPONENTS
+  rospy
+  std_msgs
+  geometry_msgs        
+  message_generation                    (이거 추가!)
+)
+add_message_files(
+   FILES
+   Num.msg                              (이거 추가!)
+)
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+   ros_basic_topic                      (이거 추가!)
+ )
 
-
-
-
-
+CATKIN_DEPENDS message_runtime          (이거 추가!주석해제하면 됌)
 
 
 

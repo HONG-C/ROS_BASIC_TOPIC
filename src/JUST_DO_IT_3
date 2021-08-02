@@ -79,7 +79,8 @@ add_message_files(
 CATKIN_DEPENDS message_runtime          (이거 추가!주석해제하면 됌)
 
 
-
+8.프로그램 실행시 계속 끊길 때
+rospy.sleep(0.1)    (참고로 0.1은 0.1초임)
 
 
 

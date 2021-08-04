@@ -6,7 +6,7 @@ from std_msgs.msg import String#기본 메시지 파일 불러오기
 from ar_track_alvar_msgs.msg import AlvarMarkers
 
 def callback(data):
-      rospy.loginfo(data)
+      rospy.loginfo(data.markers)
 
 def listener():
       rospy.init_node('listener',anonymous=True) #노드명 초기화 

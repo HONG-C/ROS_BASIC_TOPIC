@@ -1,0 +1,65 @@
+cd catkin_ws/src/                                       (ros작업공간 및 소스파일 폴더로 이동)
+catkin_create_pkg ros_basic_topic std_msgs rospy        (패키지 생성)
+roscd ros_basic_topic/                                  (생성한 ros 패키지 내 공간으로 이동)
+mkdir msg                                               (msg폴더 생성)
+echo "int64 num" > msg/Num.msg                          (msg폴더에 Num.msg파일 생성 후 int64 num이라는 내용 추가)
+gedit package.xml                                       (패키지 파일 수정)
+파일 열리면 아래 두줄 주석 해제
+<build_depend>message_generation</build_depend>
+<exec_depend>message_runtime</exec_depend>
+cd src                                                  (src폴더로 이동.src폴더는 우리 주로 작업하는 파일넣는 곳)
+gedit talker.py
+아래 내용 추가
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import rospy	#ros 내에서 파이썬 사용을 위한 파일 
+from std_msgs.msg import String#기본 메시지 파일 불러오기 
+
+def talker():
+      pub = rospy.Publisher('chatter',String,queue_size=10)
+      rospy.init_node('talker', anonymous = True)
+      rate = rospy.Rate(10) #10hz
+      while not rospy.is_shutdown():
+            hello_str = "hello world %s" % rospy.get_time()
+            rospy.loginfo(hello_str)
+            pub.publish(hello_str)
+            rate.sleep()
+
+if __name__=='__main__':
+      try:
+            talker()
+      except rospy.ROSInterruptException:
+            pass
+
+                   
+chmod +x talker.py                                    (실행권한 부여)
+gedit listener.py
+아래 내용 추가 
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import rospy	#ros 내에서 파이썬 사용을 위한 파일 
+from std_msgs.msg import String#기본 메시지 파일 불러오기 
+
+def callback(data):
+      rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+
+def listener():
+      rospy.init_node('listener',anonymous=True) #노드명 초기화 
+
+      rospy.Subscriber("chatter", String, callback)
+
+      rospy.spin()
+
+if __name__=='__main__':
+      listener()
+
+chmod +x listener.py                                    (실행권한 부여)
+cm                                                      (변경사항 적용)                   
+roscore                                                 (마스터 실행)
+rosrun ros_basic_topic talker.py                        (퍼블리셔 실행)
+rosrun ros_basic_topic listener.py                      (서브스크라이버 실행)
+rqt_graph                                               (rqt그래프 실행해서 정상작동확인)
+

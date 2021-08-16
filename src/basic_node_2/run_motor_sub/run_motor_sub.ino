@@ -5,11 +5,11 @@
 
 #include <ros.h>
 #include <std_msgs/Int64.h>
-
+#include <Servo.h>//include servo headerfile
 
 //To communicate with ros system,setting an nodehandle
 ros::NodeHandle nh;
-
+Servo servo;//using Servo class, make servo object
 
 std_msgs::Int64 test;
 void messageCb( const std_msgs::Int64& msg)
@@ -24,14 +24,7 @@ ros::Subscriber<std_msgs::Int64> s("your_topic", &messageCb);
 
 void setup()
 {
-  //motorA
-  pinMode(12, OUTPUT);//cw,ccw
-  pinMode(3, OUTPUT);//speed
-  pinMode(9, OUTPUT);//brake
-  //motorB
-  pinMode(13, OUTPUT);//cw,ccw
-  pinMode(11, OUTPUT);//speed
-  pinMode(8, OUTPUT);//brake
+  servo.attach(7);
   nh.initNode();
   nh.subscribe(s);
   Serial.begin(57600);
@@ -50,13 +43,7 @@ void loop()
     //Serial.println(test.data);
   }
 
-  digitalWrite(12,1);
-  digitalWrite(3,test.data);
-  delay(1000);
-  
-  digitalWrite(13,1);
-  digitalWrite(11,test.data);
-  delay(1000);
+  servo.write(test.data);
   //function for starting callback function
   //when message is subscribed, start callback function
   nh.spinOnce();

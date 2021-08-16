@@ -17,7 +17,10 @@ def print_angle():
       rospy.init_node('steering_result_pub',anonymous=True) #노드명 초기화 
       pub = rospy.Publisher('your_topic',Int64,queue_size=10)
       rospy.Subscriber("angle", Int64, callback)
-      pub.publish(motor_angle)
+      rate = rospy.Rate(10) #default is 10hz
+      while not rospy.is_shutdown():
+      	    pub.publish(motor_angle)
+            rate.sleep()
       rospy.spin()
 
 if __name__=='__main__':

@@ -24,7 +24,7 @@ ros::Subscriber<std_msgs::Int64> s("your_topic", &messageCb);
 
 void setup()
 {
-  servo.attach(7);
+  servo.attach(7);//declare for use servo motor
   nh.initNode();
   nh.subscribe(s);
   Serial.begin(57600);
@@ -41,6 +41,7 @@ void loop()
   {
     Serial.println("not ok");
     //Serial.println(test.data);
+    //make error if use upper line
   }
 
   servo.write(test.data);

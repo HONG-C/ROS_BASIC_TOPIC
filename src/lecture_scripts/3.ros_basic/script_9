@@ -1,1 +1,28 @@
-from std_msgs.msg import Float64
+저번시간에는 저희가 직접 퍼블리셔와 서브스크라이버를 만들어보았는데요 이런 생각이 들수 있을겁니다. 어?그럼 노드는 메시지를 받으면서 동시에 보낼수는 없는걸까?네 가능합니다!그래서 오늘 시간에는 조향각을 입력받고 그 값을 터미널에 출력 후 모터로 전송하는 노드를 만들어보도록  하겠습니다.기존 서브스크라이버를 수정하는 식으로 작업할거에요 
+자 우선 motor_angle이라는 전역변수를 만듭니다 
+motor_angle=0
+그 후 callback함수에서 motor_angle을 글로벌 선언합니다.
+global motor_angle
+그 후 읽어들인 조향각 값을 motor_angle에 저장합니다.
+motor_angle=data.data
+자 그 후 아래에서도 변수를 글로벌 선언 해주고 
+global motor_angle
+퍼블리셔 부분을 만듭니다
+pub = rospy.Publisher('your_topic',Int64,queue_size=10)
+그 후에 rate를 설정해주고 반복문을 넣음으로써 주기적으로 메시지가 퍼블리싱 되도록 코딩합니다
+      rate = rospy.Rate(10) #default is 10hz
+      while not rospy.is_shutdown():
+      	    pub.publish(motor_angle)
+            rate.sleep()
+자 이렇게 되면 한번 실행시켜보겠습니다 
+자 roscore는 기본으로 키시고~
+rosrun ros_basic_topic steering_angle.py 
+rosrun ros_basic_topic steering_result_pub.py 
+자 우리는 아직 /your_topic 값을 읽는 노드를 만들지 않았죠~그래서 2가지 방식으로 퍼블리싱 되는지 알아보겠습니다
+우선 첫번째!
+rostopic list
+이러면 퍼블리싱되는걸 확인할수 있고요~
+rostopic echo /your_topic  
+이렇게 하면 이제 출력되는 값도 확인할수 있습니다~
+
+

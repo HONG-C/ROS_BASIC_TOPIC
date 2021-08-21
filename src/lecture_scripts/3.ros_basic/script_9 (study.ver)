@@ -1,0 +1,50 @@
+steering_result   ->    steering_result_pub
+우선 motor_angle이라는 전역변수를 만듭니다 
+motor_angle=0
+그 후 callback함수에서 motor_angle을 글로벌 선언합니다.
+global motor_angle
+그 후 읽어들인 조향각 값을 motor_angle에 저장합니다.
+motor_angle=data.data
+자 그 후 아래에서도 변수를 글로벌 선언 해주고 
+global motor_angle
+노드 이름을 변경해줍니다 
+rospy.init_node('steering_result_pub',anonymous=True)
+퍼블리셔 부분을 만듭니다
+pub = rospy.Publisher('your_topic',Int64,queue_size=10)
+그 후에 rate를 설정해주고 반복문을 넣음으로써 주기적으로 메시지가 퍼블리싱 되도록 코딩합니다
+      rate = rospy.Rate(10) #default is 10hz
+      while not rospy.is_shutdown():
+      	    pub.publish(motor_angle)
+            rate.sleep()#!/usr/bin/env python
+
+
+
+완성본 
+# -*- coding: utf-8 -*-
+
+import rospy	#ros 내에서 파이썬 사용을 위한 파일 
+from std_msgs.msg import Int64#기본 메시지 파일 불러오기 
+motor_angle=0
+
+def callback(data):
+      global motor_angle
+      rospy.loginfo(rospy.get_caller_id() + "모터값출력:%d", data.data)
+      motor_angle=data.data
+def print_angle():
+      global motor_angle
+      rospy.init_node('steering_result_pub',anonymous=True) #노드명 초기화 
+      pub = rospy.Publisher('your_topic',Int64,queue_size=10)
+      rospy.Subscriber("angle", Int64, callback)
+      rate = rospy.Rate(10) #default is 10hz
+      while not rospy.is_shutdown():
+      	    pub.publish(motor_angle)
+            rate.sleep()
+      rospy.spin()
+
+if __name__=='__main__':
+      print_angle()
+
+
+
+
+

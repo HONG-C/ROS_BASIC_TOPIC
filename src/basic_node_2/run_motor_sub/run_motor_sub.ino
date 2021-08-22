@@ -32,17 +32,6 @@ void setup()
 
 void loop()
 {
-  
-  if(test.data==250)
-  {
-    Serial.println("ok");
-  }
-  else
-  {
-    Serial.println("not ok");
-    //Serial.println(test.data);
-    //make error if use upper line
-  }
 
   servo.write(test.data);
   //function for starting callback function

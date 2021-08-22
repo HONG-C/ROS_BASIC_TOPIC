@@ -1,0 +1,15 @@
+자 저번시간에는 기본 서브스크라이버에서 your_topic값을 퍼블리싱 할수 있도록 만들었는데요. 오늘은 그 값을 활용해서! 아두이노를 직접 제어해보도록 하겠습니다. ros에서 아두이노를 제어할수 있으면 정말 많은걸 할수 있어요.카메라 데이터를 open cv나 yolo등을 써서 사물 인식이나 차선 인식 등등을 할수도 있고,모터를 제어해서 로봇팔이나 자동차를 만들수도 있죠.오늘은 우선 사용하기 전에 ros에서 아두이노를 사용하기 위한 준비 먼저 해보도록 하겠습니다.
+우선 아두이노를 설치하고요
+sudo apt-get install ros-melodic-rosserial-arduino
+sudo apt-get install ros-melodic-rosserial
+cd <아두이노 경로>/libraries
+(저는 home에 있어서 cd arduino-1.8.15/libraries/)
+rm -rf ros_lib    (기존에 ros라이브러리가 설치되어있을수 있기 때문에 제거)
+roscore
+rosrun rosserial_arduino make_libraries.py
+ls쳐서 ros_lib가 있으면 정상설치된거임 
+그러면 아두이노 연결 후 file - examples - ros_lib - helloworld선택 업로드 
+roscore
+rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=57600   (포트와 보드레이트 확인) 
+rostopic echo chatter
+이렇게 테스트 해보시면 됩니다

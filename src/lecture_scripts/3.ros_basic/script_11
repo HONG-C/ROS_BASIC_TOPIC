@@ -1,0 +1,44 @@
+자 그러면! 이번시간에는 본격적으로 ros로 아두이노 서보모터를 제어해보도록 하겟습니다!
+선연결은 사진을 보시고 똑같이 하시면 됩니다
+자 그러면 코딩해보죠!
+
+#include <ros.h> 
+자 로스 헤더파일 포함!
+
+#include <std_msgs/Int64.h>
+메시지 헤더파일 포함! 저번시간에 노드 만들던것과 똑같죠?
+
+ros::NodeHandle nh;  
+자 노드핸들 선언해주고!(이부분 추가 설명 필요)
+
+Servo servo;//using Servo class, make servo object  
+서보모터 사용을 위해 서보 객체도 만들어줍니다 이건 아두이노로 서보모터 제어해보신분들은 다 아실거에요
+
+void messageCb( const std_msgs::Int64& msg)
+{
+  test.data = msg.data;
+  
+}
+콜백함수! 아두이노에서 똑같이 제작해줍니다 
+
+ros::Subscriber<std_msgs::Int64> s("your_topic", &messageCb);
+서브스크라이버도 동일하게 선언해주고요~
+
+void setup()//한번 동작하고 다시 돌지 않는 세팅 부분입니다!
+{
+  servo.attach(7);//서보모터 몇번핀에 꽂혀있는지 알려주는 부분이죠?
+  nh.initNode();//노드핸들 이용해서 시작하고요 
+  nh.subscribe(s);//섭스크라이버 사용 선언하구요 
+  Serial.begin(57600);//시리얼 통신 속도! 확인해주세요 이게 맞아야 제대로 통신이 됩니다  
+}
+
+void loop()
+{
+
+  servo.write(test.data);//서보모터 입력받은 값만큼 회전시킵니다!
+
+  nh.spinOnce();//큐에 요청된 콜백함수를 처리(호출시점까지 요청된 콜백함수 처리) 
+  //nh.spin:큐에 요청된 콜백함수를 처리하는데 프로그램이 종료될때까지 반복 
+  delay(60);//작동되고 일정시간 딜레이 시킵니다!딜레이를 안주면 동작이 실행 안되는 경우도 있기 때문에 넣어주는게 좋습니다 단위는 밀리세컨즈 
+}
+

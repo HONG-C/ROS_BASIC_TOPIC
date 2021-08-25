@@ -1,4 +1,6 @@
-
+시작하기에 앞서 리눅스 가장 기초 명령어 2개만 설명드리겠습니다
+cd:특정 파일 경로로 이동하는 명령어입니다
+ls:경로(폴더)내에 있는 파일들을 확인할수 있는 명령어입니다.
 
 cd catkin_ws/src/                                       (ros작업공간 및 소스파일 폴더로 이동)
 catkin_create_pkg ros_topic std_msgs rospy        (패키지 생성)
